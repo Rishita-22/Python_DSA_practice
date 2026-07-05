@@ -1,0 +1,322 @@
+SQL> CREATE TABLE student (
+  2      sid        NUMBER(5),
+  3      sname      VARCHAR2(50),
+  4      dob        DATE,
+  5      marks      NUMBER(5,2)
+  6  );
+CREATE TABLE student (
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL>
+SQL>
+SQL>
+SQL> create table student(sid number(5),sname varchar2(20),dob date,marks number(5,2));
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ SNAME                                              VARCHAR2(20)
+ DOB                                                DATE
+ MARKS                                              NUMBER(5,2)
+
+SQL> describe student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ SNAME                                              VARCHAR2(20)
+ DOB                                                DATE
+ MARKS                                              NUMBER(5,2)
+
+SQL> alter table student drop column dob;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ SNAME                                              VARCHAR2(20)
+ MARKS                                              NUMBER(5,2)
+
+SQL> alter table student add (dob date);
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ SNAME                                              VARCHAR2(20)
+ MARKS                                              NUMBER(5,2)
+ DOB                                                DATE
+
+SQL> alter table student rename dob to sdob ;
+alter table student rename dob to sdob
+                           *
+ERROR at line 1:
+ORA-14155: missing PARTITION or SUBPARTITION keyword
+
+
+SQL> alter table student rename column dob to sdob ;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ SNAME                                              VARCHAR2(20)
+ MARKS                                              NUMBER(5,2)
+ SDOB                                               DATE
+
+SQL> alter table student modify (sname varchar2(40));
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ SNAME                                              VARCHAR2(40)
+ MARKS                                              NUMBER(5,2)
+ SDOB                                               DATE
+
+SQL> rename table student to iterstudent;
+rename table student to iterstudent
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> rename  student to iterstudent;
+
+Table renamed.
+
+SQL> desc student;
+ERROR:
+ORA-04043: object student does not exist
+
+
+SQL> dexc iterstudent;
+SP2-0734: unknown command beginning "dexc iters..." - rest of line ignored.
+SQL> desc iterstudent;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(5)
+ SNAME                                              VARCHAR2(40)
+ MARKS                                              NUMBER(5,2)
+ SDOB                                               DATE
+
+SQL> insert into iterstudent values(1,'a',90,'14-may-1999');
+
+1 row created.
+
+SQL> insert into iterstudent values(2,'b',90.087,'15-may-1999');
+
+1 row created.
+
+SQL> insert into iterstudent values(3,'c',90.0876,'16-may-1999');
+
+1 row created.
+
+SQL> insert into iterstudent values(4,'d',901.0876,'17-may-1999');
+
+1 row created.
+
+SQL> insert into iterstudent values(5,'e',901.0876892,'18-may-1999');
+
+1 row created.
+
+SQL> insert into iterstudent values(5,'e',12345,'18-may-1999');
+insert into iterstudent values(5,'e',12345,'18-may-1999')
+                                     *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> insert into iterstudent values(5,'e',123,'18-may-1999');
+
+1 row created.
+
+SQL> insert into iterstudent values(5,'e',1234,'18-may-1999');
+insert into iterstudent values(5,'e',1234,'18-may-1999')
+                                     *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> select * from iterstudent;
+
+       SID SNAME                                         MARKS SDOB
+---------- ---------------------------------------- ---------- ---------
+         1 a                                                90 14-MAY-99
+         2 b                                             90.09 15-MAY-99
+         3 c                                             90.09 16-MAY-99
+         4 d                                            901.09 17-MAY-99
+         5 e                                            901.09 18-MAY-99
+         5 e                                               123 18-MAY-99
+
+6 rows selected.
+
+SQL> insert into iterstudent values(5,'e',12);
+insert into iterstudent values(5,'e',12)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into iterstudent values(7,'h',12,null);
+
+1 row created.
+
+SQL> select * from iterstudent;
+
+       SID SNAME                                         MARKS SDOB
+---------- ---------------------------------------- ---------- ---------
+         1 a                                                90 14-MAY-99
+         2 b                                             90.09 15-MAY-99
+         3 c                                             90.09 16-MAY-99
+         4 d                                            901.09 17-MAY-99
+         5 e                                            901.09 18-MAY-99
+         5 e                                               123 18-MAY-99
+         7 h                                                12
+
+7 rows selected.
+
+SQL> insert into iterstudent(sname,marks) values('i',89);
+
+1 row created.
+
+SQL> select * from iterstudent;
+
+       SID SNAME                                         MARKS SDOB
+---------- ---------------------------------------- ---------- ---------
+         1 a                                                90 14-MAY-99
+         2 b                                             90.09 15-MAY-99
+         3 c                                             90.09 16-MAY-99
+         4 d                                            901.09 17-MAY-99
+         5 e                                            901.09 18-MAY-99
+         5 e                                               123 18-MAY-99
+         7 h                                                12
+           i                                                89
+
+8 rows selected.
+
+SQL> update table iterstudent sid=8 where sname='i';
+update table iterstudent sid=8 where sname='i'
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> update table iterstudent set sid=8 where sname='i';
+update table iterstudent set sid=8 where sname='i'
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> update iterstudent set sid=8 where sname='i';
+
+1 row updated.
+
+SQL> select * from iterstudent;
+
+       SID SNAME                                         MARKS SDOB
+---------- ---------------------------------------- ---------- ---------
+         1 a                                                90 14-MAY-99
+         2 b                                             90.09 15-MAY-99
+         3 c                                             90.09 16-MAY-99
+         4 d                                            901.09 17-MAY-99
+         5 e                                            901.09 18-MAY-99
+         5 e                                               123 18-MAY-99
+         7 h                                                12
+         8 i                                                89
+
+8 rows selected.
+
+SQL> update iterstudent set sid=6,sname='f',sdob='19-may-99' where mark=123;
+update iterstudent set sid=6,sname='f',sdob='19-may-99' where mark=123
+                                                              *
+ERROR at line 1:
+ORA-00904: "MARK": invalid identifier
+
+
+SQL> update iterstudent set sid=6,sname='f',sdob='19-may-99' where marks=123;
+
+1 row updated.
+
+SQL> select * from iterstudent;
+
+       SID SNAME                                         MARKS SDOB
+---------- ---------------------------------------- ---------- ---------
+         1 a                                                90 14-MAY-99
+         2 b                                             90.09 15-MAY-99
+         3 c                                             90.09 16-MAY-99
+         4 d                                            901.09 17-MAY-99
+         5 e                                            901.09 18-MAY-99
+         6 f                                               123 19-MAY-99
+         7 h                                                12
+         8 i                                                89
+
+8 rows selected.
+
+SQL> delete from iterstudent where sid=7;
+
+1 row deleted.
+
+SQL> select * from iterstudent;
+
+       SID SNAME                                         MARKS SDOB
+---------- ---------------------------------------- ---------- ---------
+         1 a                                                90 14-MAY-99
+         2 b                                             90.09 15-MAY-99
+         3 c                                             90.09 16-MAY-99
+         4 d                                            901.09 17-MAY-99
+         5 e                                            901.09 18-MAY-99
+         6 f                                               123 19-MAY-99
+         8 i                                                89
+
+7 rows selected.
+
+SQL> select sid,marks from iterstudent;
+
+       SID      MARKS
+---------- ----------
+         1         90
+         2      90.09
+         3      90.09
+         4     901.09
+         5     901.09
+         6        123
+         8         89
+
+7 rows selected.
+
+SQL> select * from iterstudent where sid=1;
+
+       SID SNAME                                         MARKS SDOB
+---------- ---------------------------------------- ---------- ---------
+         1 a                                                90 14-MAY-99
+
+SQL> select sname,marks from iterstudent where sid=1;
+
+SNAME                                         MARKS
+---------------------------------------- ----------
+a                                                90
+
+SQL> commit;
+
+Commit complete.
+
+SQL>

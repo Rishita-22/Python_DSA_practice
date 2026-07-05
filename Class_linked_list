@@ -1,0 +1,853 @@
+#Single node :- 
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+
+head = Node(10)
+
+
+print("Single Node Linked List:")
+ptr = head
+while ptr is not None:
+    print(ptr.data, end=" -> ")
+    ptr = ptr.next
+print("None")
+
+
+
+
+
+
+
+#Two node :- 
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+
+head = Node(10)
+second = Node(20)
+
+
+head.next = second
+
+
+print("Two Node Linked List:")
+ptr = head
+while ptr is not None:
+    print(ptr.data, end=" -> ")
+    ptr = ptr.next
+print("None")
+
+
+
+
+
+
+
+
+
+#Three node :-
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+
+head = Node(10)
+second = Node(20)
+third = Node(30)
+
+
+head.next = second
+second.next = third
+
+
+print("Three Node Linked List:")
+ptr = head
+while ptr is not None:
+    print(ptr.data, end=" -> ")
+    ptr = ptr.next
+print("None")
+
+
+
+
+
+
+------- single linked list making(method 1)------
+
+class Node:
+    def __init__(self, data):
+        self.data = data   # store value
+        self.next = None   # link to next node
+
+def main():
+    head = None
+    ptr = None
+    c = 0
+    ch = 'y'
+
+    while ch == 'y':
+        c += 1
+        data = int(input(f"Enter node {c} data: "))
+        cur = Node(data)
+
+        if head is None:       # if list is empty
+            head = cur         # first node becomes head
+        else:
+            ptr.next = cur     # link previous node to new one
+
+        ptr = cur              # move tail pointer to new node
+        ch = input("To create new node press y: ")
+
+    print("Elements are: ")
+    ptr = head
+    while ptr is not None:     # traverse and print
+        print(ptr.data)
+        ptr = ptr.next
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------- single linked list making ( method 2 )--------
+
+class Node:
+    def __init__(self,data):
+        self.data = data
+        self.next = None
+
+class SL:
+    head = None #static-like variable (same for all methods)
+
+    @staticmethod
+    def create():
+        c = 0
+        ch = 'y'
+        ptr = None
+
+        while ch == 'y':
+            c += 1
+            dta = int(input(f"Enter node{c} data: "))
+            cur = Node(data)
+
+            if SL.head is None:
+                SL.head = cur 
+            else:
+                ptr.next = cur
+
+            ptr = cur 
+            ch = input("To create new node press y; ")
+
+    @staticmethod
+    def disp():
+        print("Elements are:")
+        ptr = SL.head
+        while ptr is not None:
+            print(ptr.data)
+            ptr = ptr.next
+
+#main equivalent 
+if __name__=="__main__":
+    SL.create()
+    SL.disp()
+
+
+
+
+
+
+
+
+
+
+
+
+----insert node at beginning-----
+
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class SL:
+    head = None  # static-like variable (shared by methods)
+
+    @staticmethod
+    def create():
+        c = 0
+        ch = 'y'
+        ptr = None
+
+        while ch == 'y':
+            c += 1
+            dta = int(input(f"Enter node {c} data: "))
+            cur = Node(dta)   # fixed here
+
+            if SL.head is None:
+                SL.head = cur
+            else:
+                ptr.next = cur
+
+            ptr = cur
+            ch = input("To create new node press y: ")
+
+    @staticmethod
+    def insert_beg():
+        dta = int(input("Enter data to insert at beginning: "))
+        cur = Node(dta)
+
+        # new node points to the old head
+        cur.next = SL.head
+
+        # update head to new node
+        SL.head = cur
+
+    @staticmethod
+    def disp():
+        print("Elements are:")
+        ptr = SL.head
+        while ptr is not None:
+            print(ptr.data)
+            ptr = ptr.next
+
+
+# main equivalent
+if __name__ == "__main__":
+    SL.create()
+    SL.disp()
+
+    # Insert at beginning
+    SL.insert_beg()
+    SL.disp()
+
+
+
+
+
+
+
+
+
+---- insert node at end -----
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class SL:
+    head = None  # static-like variable (shared by methods)
+
+    @staticmethod
+    def create():
+        c = 0
+        ch = 'y'
+        ptr = None
+
+        while ch == 'y':
+            c += 1
+            dta = int(input(f"Enter node {c} data: "))
+            cur = Node(dta)   # fixed here
+
+            if SL.head is None:
+                SL.head = cur
+            else:
+                ptr.next = cur
+
+            ptr = cur
+            ch = input("To create new node press y: ")
+    @staticmethod
+    def disp():
+        print("Elements are:")
+        ptr = SL.head
+        while ptr is not None:
+            print(ptr.data)
+            ptr = ptr.next
+    @staticmethod
+    def insert_end():
+        dta = int(input("Enter data to insert at ending: "))
+        cur = Node(dta)
+
+        if SL.head is None:  # if list is empty
+            SL.head = cur
+            return
+
+        ptr = SL.head
+        while ptr.next is not None:
+            ptr = ptr.next
+
+        ptr.next = cur
+  
+
+
+# main equivalent
+if __name__ == "__main__":
+    SL.create()
+    SL.disp()
+
+    # Insert at beginning
+    SL.insert_end()
+    SL.disp()
+
+
+
+
+
+
+
+
+
+------ delete node at beginning ------
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class SL:
+    head = None  
+
+    @staticmethod
+    def create():
+        c = 0
+        ch = 'y'
+        ptr = None
+
+        while ch == 'y':
+            c += 1
+            dta = int(input(f"Enter node {c} data: "))
+            cur = Node(dta)
+
+            if SL.head is None:
+                SL.head = cur
+            else:
+                ptr.next = cur
+
+            ptr = cur
+            ch = input("To create new node press y: ")
+
+    @staticmethod
+    def delete_beg():
+        if SL.head is None:  
+            print("no element")
+            return
+        print("delete element =", SL.head.data)
+        SL.head = SL.head.next
+
+    @staticmethod
+    def disp():
+        if SL.head is None:
+            print("List is empty")
+            return
+        print("Elements are:")
+        ptr = SL.head
+        while ptr is not None:
+            print(ptr.data)
+            ptr = ptr.next
+
+
+
+if __name__ == "__main__":
+    SL.create()
+    SL.disp()
+
+    
+    SL.delete_beg()
+    SL.disp()
+
+
+
+
+
+
+------ delete node at end --------
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class SL:
+    head = None  # static-like variable (shared by methods)
+
+    @staticmethod
+    def create():
+        c = 0
+        ch = 'y'
+        ptr = None
+
+        while ch == 'y':
+            c += 1
+            dta = int(input(f"Enter node {c} data: "))
+            cur = Node(dta)
+
+            if SL.head is None:
+                SL.head = cur
+            else:
+                ptr.next = cur
+
+            ptr = cur
+            ch = input("To create new node press y: ")
+
+
+    @staticmethod
+    def delete_end():
+        if SL.head is None:  
+            print("no element")
+            return
+
+        if SL.head.next is None:  
+            print("delete element =", SL.head.data)
+            SL.head = None
+            return
+
+        
+        ptr = SL.head
+        while ptr.next.next is not None:
+            ptr = ptr.next
+
+        print("delete element =", ptr.next.data)
+        ptr.next = None
+
+    @staticmethod
+    def disp():
+        if SL.head is None:
+            print("List is empty")
+            return
+        print("Elements are:")
+        ptr = SL.head
+        while ptr is not None:
+            print(ptr.data)
+            ptr = ptr.next
+
+
+
+if __name__ == "__main__":
+    SL.create()
+    SL.disp()
+
+    SL.delete_end()
+    SL.disp()
+
+
+
+
+
+
+
+-------- sum of elements ----------
+
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class SL:
+    head = None  # static-like variable (shared by methods)
+
+    @staticmethod
+    def create():
+        c = 0
+        ch = 'y'
+        ptr = None
+
+        while ch == 'y':
+            c += 1
+            dta = int(input(f"Enter node {c} data: "))
+            cur = Node(dta)
+
+            if SL.head is None:
+                SL.head = cur
+            else:
+                ptr.next = cur
+
+            ptr = cur
+            ch = input("To create new node press y: ")
+
+
+    @staticmethod
+    def sum_of_element():
+        if SL.head is None:  
+            print("no element")
+            return
+
+        sum=0
+        ptr = SL.head
+        while ptr is not None:
+            sum = sum + ptr.data
+            ptr = ptr.next
+
+        print("Sum of elements = ",sum)
+        
+        
+
+    @staticmethod
+    def disp():
+        if SL.head is None:
+            print("List is empty")
+            return
+        print("Elements are:")
+        ptr = SL.head
+        while ptr is not None:
+            print(ptr.data)
+            ptr = ptr.next
+
+
+
+if __name__ == "__main__":
+    SL.create()
+    SL.disp()
+
+    SL.sum_of_element()
+    
+
+
+
+
+
+
+
+
+
+
+
+-------- counting number of nodes -----------
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class SL:
+    head = None  # static-like variable (shared by methods)
+
+    @staticmethod
+    def create():
+        c = 0
+        ch = 'y'
+        ptr = None
+
+        while ch == 'y':
+            c += 1
+            dta = int(input(f"Enter node {c} data: "))
+            cur = Node(dta)
+
+            if SL.head is None:
+                SL.head = cur
+            else:
+                ptr.next = cur
+
+            ptr = cur
+            ch = input("To create new node press y: ")
+
+
+    @staticmethod
+    def count_node():
+        if SL.head is None:  
+            print("no element")
+            return
+
+        count=0
+        ptr = SL.head
+        while ptr is not None:
+            count += 1
+            ptr = ptr.next
+
+        print("Number of nodes = ",count)
+        
+        
+
+    @staticmethod
+    def disp():
+        if SL.head is None:
+            print("List is empty")
+            return
+        print("Elements are:")
+        ptr = SL.head
+        while ptr is not None:
+            print(ptr.data)
+            ptr = ptr.next
+
+
+
+if __name__ == "__main__":
+    SL.create()
+    SL.disp()
+
+    SL.count_node()
+    
+
+
+
+
+
+
+
+
+
+
+----------  searching an element ------------
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class SL:
+    head = None  # static-like variable (shared by methods)
+
+    @staticmethod
+    def create():
+        c = 0
+        ch = 'y'
+        ptr = None
+
+        while ch == 'y':
+            c += 1
+            dta = int(input(f"Enter node {c} data: "))
+            cur = Node(dta)
+
+            if SL.head is None:
+                SL.head = cur
+            else:
+                ptr.next = cur
+
+            ptr = cur
+            ch = input("To create new node press y: ")
+
+
+    @staticmethod
+    def search_element(ele):
+        if SL.head is None:  
+            print("no element")
+            return
+        ptr = SL.head
+        while ptr is not None:
+            if ptr.data == ele:
+                break
+            ptr = ptr.next
+
+        if ptr is None:
+            print("No element is found")
+        else:
+            print("Element found")
+        
+        
+
+    @staticmethod
+    def disp():
+        if SL.head is None:
+            print("List is empty")
+            return
+        print("Elements are:")
+        ptr = SL.head
+        while ptr is not None:
+            print(ptr.data)
+            ptr = ptr.next
+
+
+
+if __name__ == "__main__":
+    SL.create()
+    SL.disp()
+
+    SL.search_element(4)
+    
+
+
+
+
+
+
+
+
+
+
+---------- checking how many times element is occuring ----------
+
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class SL:
+    head = None  # static-like variable (shared by methods)
+
+    @staticmethod
+    def create():
+        c = 0
+        ch = 'y'
+        ptr = None
+
+        while ch == 'y':
+            c += 1
+            dta = int(input(f"Enter node {c} data: "))
+            cur = Node(dta)
+
+            if SL.head is None:
+                SL.head = cur
+            else:
+                ptr.next = cur
+
+            ptr = cur
+            ch = input("To create new node press y: ")
+
+
+    @staticmethod
+    def element_occurance(ele):
+        if SL.head is None:  
+            print("no element")
+            return
+        ptr = SL.head
+        count = 0 ;
+        while ptr is not None:
+            if ptr.data == ele:
+                count += 1
+            ptr = ptr.next
+
+        if count == 0:      
+            print("No element is found")
+        else:
+            print(f"Element found {count} times(s)")
+        
+        
+
+    @staticmethod
+    def disp():
+        if SL.head is None:
+            print("List is empty")
+            return
+        print("Elements are:")
+        ptr = SL.head
+        while ptr is not None:
+            print(ptr.data)
+            ptr = ptr.next
+
+
+
+if __name__ == "__main__":
+    SL.create()
+    SL.disp()
+
+    SL.element_occurance(4)
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------- Reversing linked list elements -----------
+
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class SL:
+    head = None  # static-like variable (shared by methods)
+
+    @staticmethod
+    def create():
+        c = 0
+        ch = 'y'
+        ptr = None
+
+        while ch == 'y':
+            c += 1
+            dta = int(input(f"Enter node {c} data: "))
+            cur = Node(dta)
+
+            if SL.head is None:
+                SL.head = cur
+            else:
+                ptr.next = cur
+
+            ptr = cur
+            ch = input("To create new node press y: ")
+
+
+    @staticmethod
+    def reverse():
+        if SL.head is None:  
+            print("no element")
+            return
+        cur = SL.head.next
+        
+        ptr = SL.head
+        SL.head.next = None
+        while cur.next is not None:
+            temp = cur.next
+            cur.next = ptr
+            ptr = cur
+            cur = temp
+
+        cur.next = ptr 
+        SL.head = cur
+
+
+    @staticmethod
+    def disp():
+        if SL.head is None:
+            print("List is empty")
+            return
+        print("Elements are:")
+        ptr = SL.head
+        while ptr is not None:
+            print(ptr.data)
+            ptr = ptr.next
+
+
+
+if __name__ == "__main__":
+    SL.create()
+    SL.disp()
+
+    SL.reverse()
+    SL.disp()
+    
+
+
