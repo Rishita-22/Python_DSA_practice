@@ -1,0 +1,36 @@
+B+ Tree fixes both:
+ it stores all actual data only in leaf nodes, and internal nodes hold only guide keys (copies, used purely for navigation). 
+ On top of that, all leaf nodes are linked together in a sorted chain — turning range queries into a simple linked-list walk. This is exactly why every real database index (MySQL InnoDB, PostgreSQL, Oracle) and filesystem (NTFS, ext4) uses B+ trees, not plain B-trees.
+
+Structure
+
+A B+ tree of order m has two kinds of nodes, and they follow different rules:
+
+Internal (index) nodes
+ - Hold only keys, used purely to guide the search — no actual data attached.
+ - Max keys = m - 1, max children = m (same as B-tree).
+ - Min children (non-root) = ⌈m/2⌉.
+ - A key appearing in an internal node is just a copy — the real data still lives in a leaf.
+
+
+Leaf nodes
+ - Hold all the actual keys/data — every single key inserted into the tree ends up in some leaf.
+ - Max keys = m - 1 (sometimes trees use a different leaf capacity L, but for simplicity we use the same m).
+ - Every leaf node has a pointer to the next leaf node (next), forming a sorted singly-linked list across  
+   the bottom of the tree.
+ - Leaves are all at the same depth — same balance guarantee as a B-tree.
+
+
+Picture of the shape:
+
+                    [   internal nodes — pure signposts   ]
+                   /              |                \
+              [ internal / leaf pointers guide search down ]
+             /        |          |          \
+        [leaf] --> [leaf] --> [leaf] --> [leaf] --> NULL
+         (all actual data, linked left to right)
+The core rule that makes it a B+ tree (not a B-tree)
+
+Every key that appears in an internal node must also appear in a leaf. Internal nodes never "hide" data — they only borrow a copy of a key to use as a signpost.
+
+This single rule is what separates B+ from B-tree, and it's why searching, splitting, and traversing all behave differently.
