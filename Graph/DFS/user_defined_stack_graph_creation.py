@@ -1,5 +1,3 @@
-# User-defined Stack
-
 class Stack:
     def __init__(self):
         self.stack = []
@@ -16,19 +14,27 @@ class Stack:
         return len(self.stack) == 0
 
 
-# Graph
-graph = {
-    1: [2, 3],
-    2: [1, 3, 4],
-    3: [1, 2, 4],
-    4: [2, 3]
-}
+# Graph creation using adjacency list
+n = int(input("Enter number of vertices: "))
+e = int(input("Enter number of edges: "))
 
+graph = {i: [] for i in range(1, n + 1)}
+
+for i in range(e):
+    u, v = map(int, input("Enter edge: ").split())
+
+    graph[u].append(v)
+    graph[v].append(u)
+
+
+# Starting vertex
+start = int(input("Enter starting vertex: "))
+
+# DFS
 visited = set()
 stack = Stack()
 
-# Start from 1
-stack.push(1)
+stack.push(start)
 
 print("DFS Traversal:", end=" ")
 
@@ -37,7 +43,6 @@ while not stack.is_empty():
     node = stack.pop()
 
     if node not in visited:
-
         visited.add(node)
         print(node, end=" ")
 
